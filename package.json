@@ -1,0 +1,24 @@
+{
+  "name": "ea-webhook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.21.0",
+    "ws": "8.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node": "22.5.5",
+    "nodemon": "3.1.7",
+    "ts-node": "10.9.2",
+    "typescript": "5.6.2"
+  }
+}
