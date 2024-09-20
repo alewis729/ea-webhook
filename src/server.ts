@@ -1,27 +1,56 @@
 import express, { Request, Response } from 'express';
+import WebSocket from 'ws';
+
 import { allowedIPs, processAlert } from './utils';
 
 const app = express();
 const port = 3000;
 
+const wss = new WebSocket.Server({ port: 8080 });
+let connectedClients: WebSocket[] = [];
+
+wss.on('connection', (ws) => {
+  console.log({ mstatus: 'Client connected via WebSocket.' });
+  connectedClients.push(ws);
+
+  ws.on('close', () => {
+    console.log({ mstatus: 'Client disconnected.' });
+    connectedClients = connectedClients.filter((client) => client !== ws);
+  });
+});
+
 app.set('trust proxy', true);
 app.use(express.json());
+app.use(express.text());
 
 app.use((req: Request, res: Response, next) => {
   const reqIp = req.ip ?? '';
   if (allowedIPs.includes(reqIp)) {
     next();
   } else {
-    console.log({ mstatus: 'Invalid IP', reqIp });
+    console.log({ mstatus: 'Invalid IP.', reqIp });
     res.status(403).send('Forbidden: Invalid IP');
   }
 });
 
 app.post('/webhook', (req: Request, res: Response) => {
+  const content = req.body;
+  const contentType = req.headers['content-type'];
+  const isJson = contentType?.includes('application/json');
+  const processedData = processAlert(content, isJson);
+
   console.log({
     mstatus: 'Webhook received an alert.',
-    content: req.body,
-    processed: processAlert(req.body)
+    content,
+    contentType,
+    isJson,
+    processedData
+  });
+
+  connectedClients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(processedData));
+    }
   });
   res.status(200).send('Webhook received the alert.');
 });
