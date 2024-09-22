@@ -1,10 +1,11 @@
 import express, { Request, Response } from 'express';
 import WebSocket from 'ws';
+import 'dotenv/config';
 
-import { allowedIPs, processAlert } from './utils';
+import { tvIpAddressList, processAlert } from './utils';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT ?? 3000;
 
 const wss = new WebSocket.Server({ port: 8080 });
 let connectedClients: WebSocket[] = [];
@@ -25,7 +26,9 @@ app.use(express.text());
 
 app.use((req: Request, res: Response, next) => {
   const reqIp = req.ip ?? '';
-  if (allowedIPs.includes(reqIp)) {
+  const acceptReqFromAnyIP = process.env.ACCEPT_ANY_IP === 'true';
+
+  if (acceptReqFromAnyIP || tvIpAddressList.includes(reqIp)) {
     next();
   } else {
     console.log({ mstatus: 'Invalid IP.', reqIp });
