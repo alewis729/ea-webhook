@@ -6,6 +6,8 @@ The EA will then make operations in MT5 based on market conditions and based of 
 
 ### Test locally using curl
 
+To test locally first create an `.env` file and add `ACCEPT_ANY_IP="true"` to it.
+
 #### Simulate TradingView alert sending JSON:
 
 ```

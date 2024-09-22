@@ -2,10 +2,11 @@
   "name": "ea-webhook",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts"
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
