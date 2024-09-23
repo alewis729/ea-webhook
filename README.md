@@ -16,6 +16,7 @@ Alert Message: {"text": "BTCUSD Greater Than 9000"}
 
 ```bash
 curl -X POST http://localhost:3000/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"text": "BTCUSD Greater Than 9000"}'
+# curl -X POST https://ea-webhook.vercel.app/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"text": "BTCUSD Greater Than 9000"}'
 ```
 
 #### Simulate TradingView alert sending plain text:
@@ -26,4 +27,5 @@ Alert Message: BTCUSD Greater Than 9000
 
 ```bash
 curl -X POST http://localhost:3000/webhook -H 'Content-Type: text/plain; charset=utf-8' -d 'BTCUSD Greater Than 9000'
+# curl -X POST https://ea-webhook.vercel.app/webhook -H 'Content-Type: text/plain; charset=utf-8' -d 'BTCUSD Greater Than 9000'
 ```

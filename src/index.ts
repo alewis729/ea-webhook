@@ -14,6 +14,10 @@ wss.on('connection', (ws) => {
   console.log({ mstatus: 'Client connected via WebSocket.' });
   connectedClients.push(ws);
 
+  ws.on('message', (message) => {
+    console.log(`Received from python: ${message}`);
+  });
+
   ws.on('close', () => {
     console.log({ mstatus: 'Client disconnected.' });
     connectedClients = connectedClients.filter((client) => client !== ws);
@@ -61,6 +65,14 @@ app.post('/webhook', (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log('---------- ---------- ---------- ---------- ----------');
   console.log(`🚀 Server running on port ${port}`);
-});
+}).on('upgrade', (request, socket, head) => {
+  if (request.url === '/websocket') {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
+})
 
 module.exports = app;
