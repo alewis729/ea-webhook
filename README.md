@@ -1,4 +1,4 @@
-# EA-Webhook
+# Webhook / Websocket server
 
 This is a test webhook project. When sending alerts from TradingView to this webhook it will process the alert and communicate the processed information via websockets to a python script that acts as an EA (expert advisor) for MT5.
 
