@@ -12,6 +12,8 @@ export enum Command {
   CANCELLONG = "CANCELLONG",
   CANCELSHORT = "CANCELSHORT",
   CANCELALL = "CANCELALL",
+  CLOSELONG = "CLOSELONG",
+  CLOSESHORT = "CLOSESHORT",
   CLOSEALL = "CLOSEALL",
 }
 
@@ -25,4 +27,5 @@ export interface Alert {
   tp?: number;
   spread?: number;
   comment?: string;
+  closePerc?: number;
 }

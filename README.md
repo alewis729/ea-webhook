@@ -11,21 +11,22 @@ To test locally first create an `.env` file and add `ACCEPT_ANY_IP="true"` to it
 #### Simulate TradingView alert sending JSON:
 
 ```
-Alert Message: {"text": "BTCUSD Greater Than 9000"}
+Alert Message: {"licenseId": 123123, command: "closeall", symbol: "BTCUSD"}
 ```
 
 ```bash
-curl -X POST http://localhost:3000/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"text": "BTCUSD Greater Than 9000"}'
-# curl -X POST https://ea-webhook.vercel.app/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"text": "BTCUSD Greater Than 9000"}'
+curl -X POST http://localhost:3000/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"licenseId": 123123, command: "closeall", symbol: "BTCUSD"}'
+# curl -X POST http://localhost:3000/webhook -H 'Content-Type: application/json; charset=utf-8' -d '{"licenseId": 123123, command: "closeall", symbol: "BTCUSD"}'
 ```
 
 #### Simulate TradingView alert sending plain text:
 
 ```
-Alert Message: BTCUSD Greater Than 9000
+Alert Message: 729729,buylimit,XAUUSD,risk=0.08,price=2611.38043,sl=18.1,tp=77.2,comment="p4.1-XU-B"
 ```
 
 ```bash
-curl -X POST http://localhost:3000/webhook -H 'Content-Type: text/plain; charset=utf-8' -d 'BTCUSD Greater Than 9000'
-# curl -X POST https://ea-webhook.vercel.app/webhook -H 'Content-Type: text/plain; charset=utf-8' -d 'BTCUSD Greater Than 9000'
+curl -X POST http://localhost:3000/webhook -H 'Content-Type: text/plain; charset=utf-8' -d '729729,buylimit,XAUUSD,risk=0.08,price=2611.38043,sl=18.1,tp=77.2,comment="p4.1-XU-B"'
+curl -X POST http://localhost:3000/webhook -H 'Content-Type: text/plain; charset=utf-8' -d '729729,buylimit,BTCUSD,risk=0.08,price=60000.05,sl=55123.45,tp=70000,comment="p4.1-BTC-A"'
+# curl -X POST https://ea-webhook.vercel.app/webhook -H 'Content-Type: text/plain; charset=utf-8' -d '729729,buylimit,XAUUSD,risk=0.08,price=2611.38043,sl=18.1,tp=77.2,comment="p4.1-XU-B"'
 ```
