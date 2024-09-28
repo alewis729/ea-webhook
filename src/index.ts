@@ -12,16 +12,31 @@ const wss = new WebSocket.Server({ port: 8080 });
 let connectedClients: WebSocket[] = [];
 
 wss.on("connection", (ws) => {
-  console.log({ mstatus: "Client connected via WebSocket." });
+  console.log({ mstatus: "🍏 Client connected.", date: getNow() });
   connectedClients.push(ws);
 
   ws.on("message", (message) => {
-    console.log(`Received from python: ${message}`);
+    console.log({
+      mstatus: `Received from python: ${message}`,
+      date: getNow(),
+    });
   });
 
+  ws.on("pong", () => {
+    console.log({ mstatus: "🏓 Pong", date: getNow() });
+  });
+
+  const interval = setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.ping();
+      console.log({ mstatus: "🏓 Ping", date: getNow() });
+    }
+  }, 30000);
+
   ws.on("close", () => {
-    console.log({ mstatus: "Client disconnected." });
+    console.log({ mstatus: "🍎 Client disconnected.", date: getNow() });
     connectedClients = connectedClients.filter((client) => client !== ws);
+    clearInterval(interval);
   });
 });
 
@@ -50,17 +65,17 @@ app.post("/webhook", (req: Request, res: Response) => {
   });
 
   console.log({
-    mstatus: "Webhook received a request.",
+    mstatus: "🔔 Webhook received a request.",
     date: getNow(),
-    received: content,
     contentType,
-    isJson,
+    received: content,
     processedData,
   });
 
   if (isNil(processedData)) {
     console.log({
       mstatus: "Webhook received unexpected data. Won't propagate information.",
+      date: getNow(),
     });
     res
       .status(200)

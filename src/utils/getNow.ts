@@ -1,8 +1,8 @@
 export const getNow = () =>
   new Date().toLocaleString("en-US", {
-    weekday: "long", // e.g. "Monday"
+    weekday: "short", // e.g. "Mon"
     year: "numeric", // e.g. "2024"
-    month: "long", // e.g. "September"
+    month: "short", // e.g. "Sep"
     day: "numeric", // e.g. "22"
     hour: "numeric", // e.g. "2 PM"
     minute: "numeric", // e.g. "15"
