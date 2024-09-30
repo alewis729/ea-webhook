@@ -1,12 +1,22 @@
 # Webhook / Websocket server
 
-This is a test webhook project. When sending alerts from TradingView to this webhook it will process the alert and communicate the processed information via websockets to a python script that acts as an EA (expert advisor) for MT5.
+This is a NodeJS project that acts as a Webhook and WebSocket server. Its purpose is to receive alerts from TradingView or other clients, process the information and communicate that to all WebSocket clients.
 
-The EA will then make operations in MT5 based on market conditions and based of the information from these alerts.
+For instance, an EA such as [ea-step-up](https://github.com/alewis729/ea-step-up) can connect to this WebSocket to receive the information on real-time and execute trading operations within MT5.
+
+You can see a detailed explanation and demo in this [youtube video](https://youtu.be/uyo1dyzw83E).
 
 ### Test locally using curl
 
-To test locally first create an `.env` file and add `ACCEPT_ANY_IP="true"` to it.
+First Install and run the server
+
+```bash
+# git clone
+npm install
+npm run dev
+```
+
+Then, create an `.env` file and add `ACCEPT_ANY_IP="true"` to it.
 
 #### Simulate TradingView alert sending JSON:
 
